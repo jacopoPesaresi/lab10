@@ -63,9 +63,9 @@ public final class LambdaUtilities {
          * Suggestion: consider Optional.filter
          */
         final List<Optional<T>> myList = new ArrayList<>(list.size());
-        list.forEach(x -> {
-            myList.add(Optional.of(x).filter(pre));
-        });
+        list.forEach(x -> myList.add(Optional.ofNullable(x).filter(pre)));
+            //myList.add(Optional.of(x).filter(pre));
+        //});
         return myList;
     }
 
@@ -113,11 +113,15 @@ public final class LambdaUtilities {
          */
         final Map<K, V> myMap = new HashMap<>();
         map.forEach((x, y) -> {
+            //myMap.put(x, y.orElse(def.get()));
+            myMap.put(x, y.orElseGet(def));
+            /*
             if (!map.containsKey(x) || y.isEmpty()) {
                 myMap.put(x, def.get());
             } else {
                 myMap.put(x, y.get());
             }
+            */
         });
         return myMap;
     }
