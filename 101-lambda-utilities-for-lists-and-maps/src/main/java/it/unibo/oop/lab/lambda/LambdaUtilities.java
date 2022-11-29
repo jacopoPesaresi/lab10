@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -63,8 +62,8 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Optional.filter
          */
-        List<Optional<T>> myList = new ArrayList<>(list.size());
-        list.forEach(x->{
+        final List<Optional<T>> myList = new ArrayList<>(list.size());
+        list.forEach(x -> {
             myList.add(Optional.of(x).filter(pre));
         });
         return myList;
@@ -86,7 +85,7 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Map.merge
          */
-        Map<R, Set<T>> myMap = new HashMap<>();
+        final Map<R, Set<T>> myMap = new HashMap<>();
         list.forEach(x -> myMap.merge(op.apply(x), new HashSet<>(Set.of(x)), (oldSet, newSet) -> {
             oldSet.addAll(newSet);
             return oldSet;
@@ -112,12 +111,12 @@ public final class LambdaUtilities {
          *
          * Keep in mind that a map can be iterated through its forEach method
          */
-        Map<K, V> myMap = new HashMap<>();
-        map.forEach((x,y) -> {
+        final Map<K, V> myMap = new HashMap<>();
+        map.forEach((x, y) -> {
             if (!map.containsKey(x) || y.isEmpty()) {
-                myMap.put(x,def.get());
+                myMap.put(x, def.get());
             } else {
-                myMap.put(x,y.get());
+                myMap.put(x, y.get());
             }
         });
         return myMap;
