@@ -48,9 +48,13 @@ public final class LambdaFilter extends JFrame {
         .filter(z -> z == '\n')
         .count())),
         
-        SORT("Order alphabetically the characters", x -> x.chars()
-        .mapToObj(y -> (String) y)
-        .sorted().toString()),
+        SORT("Order alphabetically the characters", x -> Stream.of(x.split(" "))
+        .sorted()
+        .reduce((a,b) -> a.concat(" " + b ))
+        .get()),
+        
+        //.mapToObj(y -> (String) y)
+        //.sorted().toString()),
 
         COUNTOCCORUCENSES("Count how many time a word is present in the text",
         x -> Stream.of(x.split(" "))
@@ -58,8 +62,8 @@ public final class LambdaFilter extends JFrame {
         .entrySet().stream()
         .collect(
             () -> new StringBuilder(), 
-            (q, w) -> q.append(w.getKey() + " -> " + w.getValue()), 
-            (e, r) -> e.append("oh toudols ").append(r))
+            (q, w) -> q.append(w.getKey() + " - " + w.getValue() + "; \n"), 
+            (e, r) -> e.append(" (!nonvisualizzato!) ").append(r))
         .toString());
         //(a, b) -> a.append(",").append(b)));
         //forEach( x -> String.toString(x.getKey() + x.getValue())) );

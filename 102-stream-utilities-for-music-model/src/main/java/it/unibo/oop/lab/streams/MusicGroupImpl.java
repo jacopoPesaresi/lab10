@@ -96,7 +96,7 @@ public final class MusicGroupImpl implements MusicGroup {
         .get();*/
         return songs.stream()
         .collect(Collectors.toMap(Song::getAlbumName, Song::getDuration, (x,y) -> x+=y ))
-        .entrySet().stream().max( (x,y) -> x.getValue() > y.getValue() ? 1 : -1).get().getKey();
+        .entrySet().stream().max(Comparator.comparingDouble(w -> w.getValue())).get().getKey();
         //.collect(Collectors.groupingBy(Song::getAlbumName))
         
         //.forEach(null);
