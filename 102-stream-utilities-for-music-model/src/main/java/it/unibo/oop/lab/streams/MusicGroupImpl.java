@@ -80,8 +80,7 @@ public final class MusicGroupImpl implements MusicGroup {
         return songs.stream()
         .collect(Collectors.toMap(Song::getAlbumName, Song::getDuration, (x, y) -> x + y))
         .entrySet()
-        .stream()
-        .max(Comparator.comparingDouble(w -> w.getValue()))
+        .stream().max(Comparator.comparingDouble(w -> w.getValue()))
         .get()
         .getKey();
     }

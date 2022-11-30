@@ -1,0 +1,17 @@
+URL https://github.com/jacopoPesaresi/lab10.git
+
+CLONE git@github.com:jacopoPesaresi/lab10.git
+
+BRANCH exercises
+
+LAB 101-lambda-utilities-for-lists-and-maps
+
+CASA 102-stream-utilities-for-music-model
+in albumInYear ho riciclato il metodo albumNames
+in longestSong ho chiamato direttamente il max invece di pensare a una collecion
+in longestAlbum ho usato la collect con la Collectors.toMap (e per cercare il massimo ho sempre invocato max)
+(considerando che questo codice l'avevo corretto in LAB, e mi era stato suggerito di modificare longestAlbum, ma io ero comunque curioso di vedere le soluzioni per capire eventuali modi alternativi di risolvere l'esercizio, 
+in averageDurationOfSongs avevo già espresso la considerazione che era meglio separare l'&& del filter in 2 filter diverse magari)
+
+CASA 103-stream-utilities-for-text-processing
+
