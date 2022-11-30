@@ -48,7 +48,6 @@ final class TestMusicGroup {
         lz.addSong("When the Levee Breaks", Optional.of(UNTITLED), 7.1);
         lz.addSong("Travelling Riverside Blues", Optional.empty(), 5.2);
     }
-
     /**
      * Tests album names.
      */
