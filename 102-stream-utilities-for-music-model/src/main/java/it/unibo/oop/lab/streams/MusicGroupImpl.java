@@ -1,5 +1,6 @@
 package it.unibo.oop.lab.streams;
 
+import java.security.KeyStore.Entry;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +8,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Set;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -91,10 +95,17 @@ public final class MusicGroupImpl implements MusicGroup {
         .max((x, y) -> x.get().length() > y.get().length() ? 1 : x.get().length() == y.get().length() ? 0 : -1)
         .get();*/
         return songs.stream()
-        .filter(x -> x.getAlbumName().isPresent())
-        .map(Song::getAlbumName)
-        .max((x, y) -> x.get().length() > y.get().length() ? 1 : x.get().length() == y.get().length() ? 0 : -1)
-        .get();
+        .collect(Collectors.toMap(Song::getAlbumName, Song::getDuration, (x,y) -> x+=y ))
+        .entrySet().stream().max( (x,y) -> x.getValue() > y.getValue() ? 1 : -1).get().getKey();
+        //.collect(Collectors.groupingBy(Song::getAlbumName))
+        
+        //.forEach(null);
+        //.entrySet().stream().max( (x,y) -> x.getValue().stream().sum)
+        //.merge(Song::getAlbumName, Song::getDuration, (x, y) -> { return x+y;});
+        //max();
+        //.collect(Collector.of(() -> x, y -> 1, (a ,b) -> a+b,  null));
+        //.collect(Collectors.counting(HashMap::new, HashMap::put, ));
+        //.entrySet().stream().max(Comparator.comparing( (a, b) -> a.values ));
     }
 
     private static final class Song {

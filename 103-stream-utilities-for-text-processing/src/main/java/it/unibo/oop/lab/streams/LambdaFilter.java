@@ -6,8 +6,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
-import java.util.Comparator;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -40,17 +41,30 @@ public final class LambdaFilter extends JFrame {
          * Commands.
          */
         IDENTITY("No modifications", Function.identity()),
-        TOLOWERCASE("Set all case as lower", x -> x.toLowerCase()),
+        TOLOWERCASE("Set all case as lower", x -> x.toLowerCase()), //NOPMD
         COUNTCHAR("Count the chars", x -> Long.toString(x.chars().count())),
         COUNTNEWSPACE("Count the new spaces", x -> Long.toString(x.chars()
-        .mapToObj(y -> (char)y)
+        .mapToObj(y -> (char) y)
         .filter(z -> z == '\n')
         .count())),
+        
         SORT("Order alphabetically the characters", x -> x.chars()
-        .mapToObj(y -> (char)y)
-        .sorted().toString() ),
+        .mapToObj(y -> (String) y)
+        .sorted().toString()),
+
         COUNTOCCORUCENSES("Count how many time a word is present in the text",
-        x -> x.split(" ").stream() );
+        x -> Stream.of(x.split(" "))
+        .collect(Collectors.toMap(Function.identity(), a -> 1, (a, b) -> a += b))
+        .entrySet().stream()
+        .collect(
+            () -> new StringBuilder(), 
+            (q, w) -> q.append(w.getKey() + " -> " + w.getValue()), 
+            (e, r) -> e.append("oh toudols ").append(r))
+        .toString());
+        //(a, b) -> a.append(",").append(b)));
+        //forEach( x -> String.toString(x.getKey() + x.getValue())) );
+        //.collect(Collectors.toMap(Song::getAlbumName, Song::getDuration, (x,y) -> x+=y ))
+        //.entrySet().stream().max( (x,y) -> x.getValue() > y.getValue() ? 1 : -1).get().getKey());
 
         private final String commandName;
         private final Function<String, String> fun;
