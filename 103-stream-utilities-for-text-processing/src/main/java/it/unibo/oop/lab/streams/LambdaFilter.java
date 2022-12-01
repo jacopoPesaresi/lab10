@@ -44,8 +44,7 @@ public final class LambdaFilter extends JFrame {
         IDENTITY("No modifications", Function.identity()),
         TOLOWERCASE("Set all case as lower", x -> x.toLowerCase(Locale.getDefault())),
         COUNTCHAR("Count the chars", x -> Long.toString(x.chars().count())),
-        COUNTNEWSPACE("Count the new spaces", x -> Long.toString(x.chars()
-        .mapToObj(y -> (char) y)
+        COUNTNEWSPACE("Count the new spaces", x -> Long.toString(x.chars().mapToObj(y -> (char) y)
         .filter(z -> z == '\n')
         .count())),
         SORT("Order alphabetically the words", x -> Stream.of(x.split(" "))

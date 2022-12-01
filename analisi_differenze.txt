@@ -11,7 +11,15 @@ in albumInYear ho riciclato il metodo albumNames
 in longestSong ho chiamato direttamente il max invece di pensare a una collecion
 in longestAlbum ho usato la collect con la Collectors.toMap (e per cercare il massimo ho sempre invocato max)
 (considerando che questo codice l'avevo corretto in LAB, e mi era stato suggerito di modificare longestAlbum, ma io ero comunque curioso di vedere le soluzioni per capire eventuali modi alternativi di risolvere l'esercizio, 
-in averageDurationOfSongs avevo già espresso la considerazione che era meglio separare l'&& del filter in 2 filter diverse magari)
+in averageDurationOfSongs avevo già espresso la considerazione che era meglio separare l'&& del filter in 2 filter diverse, ma che poi ho dimenticato di fare)
 
 CASA 103-stream-utilities-for-text-processing
-
+in TO_LOWER potevo usare String::toLowerCase invece di farlo a mano (""dovendo scomodare i Locale"")
+in COUNT ho contato "gli chars" di uno stream di caratteri, anche se aveva più senso effettivamente fare un length della stringa...
+in LINES credevo fosse importante trattare con dei char, ma evidentemente mapToObj (ispirato dalle slide di lezione) è superflua (potevo lavorare con la codfica ASCII insomma), e pensavo che "0" fosse accettabile ("non vado mai a capo")
+in WORDS si poteva effettivamente rendere più rigida la separazione delle parole (non limitarsi al " "), e per ridurlo a un'unica stringa ho pensato di usare una concat (richiamata dalla reduce)
+in WORDCOUNT ho usato toMap per crearmi il colletor, desideravo avere i risultati secondo un ordine (ho cercato di usare particolari notazioni ma così è la versione migliore che mi è venuta) e infine per rielaborare il risultato ho usato una nuova collect, sfruttando ora un StringBuilder come "collector"...
+[Dubbi] 
+...ora: io pensavo che il terzo campo mi avrebbe accettato una condizione che serviva come gestire il "vecchio StringBuilder" e come il "nuovo StringBuilder", ma alla fine ho dovuto fare tutto nel 2 metodo (stampando tra l'altro un /n di troppo). Molto probabilmente ho interpretato io i campi da passare alla collect in quel caso. Allora cosa fa in particolare il terzo parametro passato alla collect?
+(potevo usare banalmente la reduce come nell'enum prima, ma mi son forzato a trovare una soluzione diversa, e allora ho provato così... anche se potevo semplificarmi la vita con una .map e sfruttare poi joining)
+E poi: nei ultimi due ho invocato la Stream usando il metodo statico di Stream... era forse meglio fare Arrays, come fatto in soluzione?
