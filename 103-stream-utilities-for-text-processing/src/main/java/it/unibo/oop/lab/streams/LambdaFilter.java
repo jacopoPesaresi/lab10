@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+import java.util.Locale;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,34 +42,26 @@ public final class LambdaFilter extends JFrame {
          * Commands.
          */
         IDENTITY("No modifications", Function.identity()),
-        TOLOWERCASE("Set all case as lower", x -> x.toLowerCase()), //NOPMD
+        TOLOWERCASE("Set all case as lower", x -> x.toLowerCase(Locale.getDefault())),
         COUNTCHAR("Count the chars", x -> Long.toString(x.chars().count())),
         COUNTNEWSPACE("Count the new spaces", x -> Long.toString(x.chars()
         .mapToObj(y -> (char) y)
         .filter(z -> z == '\n')
         .count())),
-        
-        SORT("Order alphabetically the characters", x -> Stream.of(x.split(" "))
+        SORT("Order alphabetically the words", x -> Stream.of(x.split(" "))
         .sorted()
-        .reduce((a,b) -> a.concat(" " + b ))
+        .reduce((a, b) -> a.concat(" " + b))
         .get()),
-        
-        //.mapToObj(y -> (String) y)
-        //.sorted().toString()),
-
         COUNTOCCORUCENSES("Count how many time a word is present in the text",
         x -> Stream.of(x.split(" "))
-        .collect(Collectors.toMap(Function.identity(), a -> 1, (a, b) -> a += b))
+        .collect(Collectors.toMap(Function.identity(), a -> 1, (a, b) -> a + b))
         .entrySet().stream()
+        .sorted((s, t) -> s.getKey().compareTo(t.getKey()))
         .collect(
             () -> new StringBuilder(), 
             (q, w) -> q.append(w.getKey() + " - " + w.getValue() + "; \n"), 
             (e, r) -> e.append(" (!nonvisualizzato!) ").append(r))
         .toString());
-        //(a, b) -> a.append(",").append(b)));
-        //forEach( x -> String.toString(x.getKey() + x.getValue())) );
-        //.collect(Collectors.toMap(Song::getAlbumName, Song::getDuration, (x,y) -> x+=y ))
-        //.entrySet().stream().max( (x,y) -> x.getValue() > y.getValue() ? 1 : -1).get().getKey());
 
         private final String commandName;
         private final Function<String, String> fun;
